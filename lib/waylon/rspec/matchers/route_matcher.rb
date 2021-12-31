@@ -29,7 +29,7 @@ module Waylon
             end
           end
 
-          chain :while_member_of do |group|
+          chain :as_member_of do |group|
             @group = group
           end
 
