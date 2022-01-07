@@ -14,8 +14,8 @@ module Waylon
     # Class-level methods to be added to User subclasses
     module ClassMethods
       # This should be overridden by subclasses to provide a mechanism for looking up Users
-      def find_by_email(_email)
-        raise NotImplementedError, "find_by_email isn't implemented"
+      def find_by_handle(_email)
+        raise NotImplementedError, "find_by_handle isn't implemented"
       end
 
       # Provides a simple mechanism for referencing User subclass's Sense

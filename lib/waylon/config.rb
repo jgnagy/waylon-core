@@ -86,6 +86,7 @@ module Waylon
     # @param key [String] The key to use for storing the value
     # @param [Object] value The value for the key
     def []=(key, value)
+      @schema ||= {}
       if (@schema[key] && validate_config(@schema[key], value)) || key.start_with?("global.")
         @config ||= {}
         @config[key] = value
@@ -101,6 +102,7 @@ module Waylon
     # @return [String,nil] The requested value
     def [](key)
       @config ||= {}
+      @schema ||= {}
       if @config.key?(key)
         @config[key].dup
       elsif @schema.key?(key) && @schema[key][:default]
@@ -111,6 +113,7 @@ module Waylon
     # Is the state of the config valid?
     # @return [Boolean]
     def valid?
+      @schema ||= {}
       missing = @schema.select { |_k, v| v[:required] }.reject { |k, _v| @config[k] }
       missing.each do |key, _value|
         ::Waylon::Logger.log("Missing config: #{key}", :debug)

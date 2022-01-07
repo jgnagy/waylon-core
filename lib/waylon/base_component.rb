@@ -23,6 +23,20 @@ module Waylon
 
     # Base Component utility methods
     module ClassUtilityMethods
+      # Allows caching from class methods
+      # @param [String] key How to store/retrieved the cached value
+      # @param [Integer] expires How long to cache the value
+      def cache(key, expires: 600)
+        cache_key = config_key_for(key)
+        if !Waylon::Cache.key?(cache_key) && block_given?
+          result = yield
+          Waylon::Cache.store(cache_key, result, expires: expires)
+        elsif !Waylon::Cache.key?(cache_key)
+          return nil
+        end
+        Waylon::Cache.load(cache_key, expires: expires)
+      end
+
       # The namespace used for this component's storage
       # @param value [String,nil] Sets this namespace unless set (without setting, returns a sane default)
       # @return [String] The namespace for this component
