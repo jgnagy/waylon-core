@@ -36,6 +36,13 @@ module Waylon
           chain :to do |method_name|
             @method_name = method_name
           end
+
+          description do
+            result = "route \"#{expected}\""
+            result += " to action \"#{@method_name}\"" if @method_name
+            result += " while a member of \"#{@group}\"" if @group
+            result
+          end
         end
       end
     end

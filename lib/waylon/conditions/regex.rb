@@ -17,6 +17,11 @@ module Waylon
       def tokens(input)
         @mechanism.match(input).to_a[1..]
       end
+
+      def named_tokens(input)
+        match_data = @mechanism.match(input)
+        match_data.names.to_h { |n| [n.to_sym, match_data[n]] }
+      end
     end
   end
 end

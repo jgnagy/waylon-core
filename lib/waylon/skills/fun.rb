@@ -6,8 +6,9 @@ module Waylon
     class Fun < Skill
       # Say hello to Waylon
       route(
-        /^(hello|hi)$/i,
-        :hello
+        /^(hello|hi)([.!]+)?$/i,
+        :hello,
+        help: "hi|hello"
       )
 
       # Responds to "hello" in less boring ways
@@ -18,6 +19,8 @@ module Waylon
           "Hi, how's it going?",
           "How can I be of service?"
         ]
+
+        react :wave
 
         reply responses.sample
       end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Waylon::Conditions::Default do
+RSpec.describe Waylon::Skills::Default do
   it "routes messages as expected" do
     send_message("foobar")
     expect(replies.last(2)).to include(":shrug:")

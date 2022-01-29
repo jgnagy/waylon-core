@@ -51,6 +51,8 @@ module Waylon
         details[:text]
       end
 
+      alias body text
+
       # Lazily provides the details for TestMessages
       # @api private
       # @return [Hash] The details for this TestMessage instance

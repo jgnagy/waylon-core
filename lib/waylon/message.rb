@@ -9,9 +9,28 @@ module Waylon
       nil
     end
 
+    # Message body
+    def body
+      nil
+    end
+
     # Message channel (meant to be overwritten by mixing classes)
     def channel
       nil
+    end
+
+    # Does the Message mention the bot (meant to be overwritten by mixing classes)
+    def mentions_bot?
+      nil
+    end
+
+    # Is the Message a private/direct Message?
+    def private?
+      false
+    end
+
+    def to_bot?
+      true
     end
   end
 end

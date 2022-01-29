@@ -22,14 +22,14 @@ module Waylon
       end
 
       # Overrides the Sense.enqueue class method to avoid Resque
-      def self.enqueue(route, request_id, body)
+      def self.enqueue(route, request)
         details = {
           "sense" => self,
-          "message" => request_id,
-          "tokens" => route.tokens(body.strip)
+          "request" => request,
+          "route" => route.name
         }
 
-        fake_queue.push [route.destination, route.action, details]
+        fake_queue.push [route.destination, details]
       end
 
       # Allows access to the fake version of Resque
@@ -50,15 +50,10 @@ module Waylon
         @message_list ||= []
       end
 
-      # Receives incoming message details and places work on a queue to be performed by a Skill
-      # @param message_details [Hash] The details necessary for creating a TestMessage
-      # @return [void]
-      def self.process(message_details)
-        message_list << message_details
-        message_id = message_list.size - 1
-        msg = message_class.new(message_id)
-        route = SkillRegistry.instance.route(msg) || SkillRegistry.instance.default_route
-        enqueue(route, msg.id, msg.text)
+      # Provides a way to use an initial request to reconstitute a Sense-specific Message
+      # @return [Waylon::Message]
+      def self.message_from_request(request)
+        message_class.new(message_list.size - 1, request)
       end
 
       # Emulates reactions by sending a message with the reaction type
@@ -66,7 +61,7 @@ module Waylon
       # @param type [Symbol,String] The type of reaction to send
       # @return [void]
       def self.react(request, type)
-        msg = message_class.new(request)
+        msg = message_from_request(request)
         msg.channel.post_message(":#{type}:")
       end
 
@@ -81,8 +76,19 @@ module Waylon
       # @param text [String] The message content to send in response to the request
       # @return [void]
       def self.reply(request, text)
-        msg = message_class.new(request)
+        msg = message_from_request(request)
         msg.channel.post_message(text)
+      end
+
+      # Receives incoming message details and places work on a queue to be performed by a Skill
+      # @param message_details [Hash] The details necessary for creating a TestMessage
+      # @return [void]
+      def self.run(message_details)
+        message_list << message_details
+        message_id = message_list.size - 1
+        msg = message_class.new(message_id)
+        route = SkillRegistry.route(msg) || SkillRegistry.instance.default_route(msg)
+        enqueue(route, message_details)
       end
 
       # Provides all message text sent _by_ Waylon

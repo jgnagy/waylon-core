@@ -29,7 +29,7 @@ RSpec.describe Waylon::SkillRegistry do
     expect(subject.help(testuser).keys).not_to include("skills.testskillwithpermissions")
     expect(subject.help(adminuser)).to be_a Hash
     expect(subject.help(adminuser)).to include(
-      { "skills.testskillwithpermissions" => [{ help: "a test", name: "testskillwithpermissions#run_test" }] }
+      { "testskillwithpermissions" => [{ help: "a test", name: "testskillwithpermissions#run_test" }] }
     )
   end
 end

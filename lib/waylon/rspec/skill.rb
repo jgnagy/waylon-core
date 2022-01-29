@@ -63,7 +63,7 @@ module Waylon
           msg_details[:channel_id] = channel ? channel.id : chatroom.id
         end
 
-        TestSense.process(msg_details)
+        TestSense.perform(msg_details)
         TestWorker.handle(TestSense.fake_queue)
       end
     end

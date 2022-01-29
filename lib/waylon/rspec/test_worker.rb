@@ -7,8 +7,8 @@ module Waylon
       # Instructs the worker to grab an item off the Queue and run it
       # @param queue [Queue] The queue that contains work to be done
       def self.handle(queue)
-        skill, action, details = queue.pop
-        skill.perform(action, details)
+        skill, details = queue.pop
+        skill.perform(details)
       end
     end
   end

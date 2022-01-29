@@ -23,7 +23,7 @@ module Waylon
       true
     end
 
-    # A list of emails specified via the CONF_GLOBAL_ADMINS environment variable
+    # A list of emails specified via the GLOBAL_ADMINS environment variable
     # @return [Array<String>] a list of emails
     def admins
       admin_emails = self["global.admins"]
@@ -32,11 +32,12 @@ module Waylon
 
     # Load in the config from env variables
     # @return [Boolean] Was the configuration loaded?
-    def load_env
+    def load_env # rubocop:disable Metrics/AbcSize
       @schema ||= {}
       self["global.log.level"] = ENV.fetch("LOG_LEVEL", "info")
       self["global.redis.host"] = ENV.fetch("REDIS_HOST", "redis")
       self["global.redis.port"] = ENV.fetch("REDIS_PORT", "6379")
+      self["global.admins"] = ENV.fetch("GLOBAL_ADMINS", "")
       ENV.keys.grep(/CONF_/).each do |env_key|
         conf_key = env_key.downcase.split("_")[1..].join(".")
         ::Waylon::Logger.log("Attempting to set #{conf_key} from #{env_key}", :debug)

@@ -6,7 +6,7 @@ module Waylon
     # The log level as defined in the global Config singleton
     # @return [String] The current log level
     def self.level
-      Config.instance["global.log.level"]
+      Config.instance["global.log.level"] || "info"
     end
 
     # Abstraction for sending logs to the logger at some level

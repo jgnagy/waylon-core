@@ -18,6 +18,11 @@ module Waylon
         raise NotImplementedError, "find_by_handle isn't implemented"
       end
 
+      # This should be overridden by subclasses to provide a mechanism for looking up Users based on mention strings
+      def from_mention(_mention_string)
+        raise NotImplementedError, "from_mention isn't implemented"
+      end
+
       # Provides a simple mechanism for referencing User subclass's Sense
       # @return [Class] A Sense subclass
       def sense

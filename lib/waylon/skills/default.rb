@@ -20,6 +20,11 @@ module Waylon
         reply("#{prefix} #{responses.sample} #{help_postfix}")
       end
 
+      # This action ignores messages
+      def ignore
+        log("Ignoring black-holed message from #{message.author.email}")
+      end
+
       # A useful addition to message to tell the User how to get help
       # @return [String]
       def help_postfix

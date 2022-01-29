@@ -5,6 +5,8 @@ module Waylon
   class SkillRegistry
     include Singleton
 
+    attr_reader :routes
+
     # A wrapper around the singleton #register method
     # @param name [String] The name of the skill in the registry
     # @param class_name [Class] The class to associate with the name
@@ -14,8 +16,24 @@ module Waylon
       instance.register(name, class_name, condition)
     end
 
-    def default_route
-      Routes::Default.new
+    def self.find_by_name(name)
+      [
+        *instance.routes,
+        Routes::PermissionDenied.new,
+        Routes::BlackHole.new,
+        Routes::Default.new
+      ].find { |r| r.name == name.to_s }
+    end
+
+    def self.route(message)
+      instance.route(message)
+    end
+
+    # Provides the default route based on the received message.
+    # @param message [Waylon::Message] The received message
+    # @return [Waylon::Route]
+    def default_route(message)
+      message.to_bot? ? Routes::Default.new : Routes::BlackHole.new
     end
 
     # Gathers a Hash of help data for all routes a user is permitted to access
@@ -23,9 +41,13 @@ module Waylon
     # @return [Hash]
     def help(user)
       data = {}
-      @routes.select { |r| r.permits?(user) }.each do |permitted|
-        data[permitted.destination.config_namespace] ||= []
-        data[permitted.destination.config_namespace] << { name: permitted.name, help: permitted.help } if permitted.help
+      @routes.select { |r| r.permits?(user) && r.mention_only? }.each do |permitted|
+        data[permitted.destination.component_namespace] ||= []
+        data[permitted.destination.component_namespace] << if permitted.help
+                                                             { name: permitted.name, help: permitted.help }
+                                                           else
+                                                             { name: permitted.name }
+                                                           end
       end
 
       data.reject { |_k, v| v.empty? }
@@ -53,14 +75,25 @@ module Waylon
     # Given a message, find a suitable skill Route for it (sorted by priority, highest first)
     # @param message [Waylon::Message] A Message instance
     # @return [Hash]
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/PerceivedComplexity
     def route(message)
       route = nil
-      message_text = message.text.strip
+      message_text = message.body.strip
       @routes ||= []
-      @routes.sort_by(&:priority).reverse.each do |candidate_route|
-        if candidate_route.permits?(message.author) && candidate_route.matches?(message_text)
-          route = candidate_route
-        elsif candidate_route.matches?(message_text)
+      @routes.sort_by(&:priority).reverse.each do |this_route|
+        if this_route.permits?(message.author) &&
+           this_route.matches?(message_text) &&
+           (this_route.properly_mentions?(message) || message.private?)
+          route = this_route
+        elsif this_route.permits?(message.author) &&
+              this_route.matches?(message_text) &&
+              !this_route.properly_mentions?(message)
+          # Black hole these because they're not direct mentions
+          route = Routes::BlackHole.new
+        elsif this_route.matches?(message_text)
           route = Routes::PermissionDenied.new
         end
         if route
@@ -70,5 +103,9 @@ module Waylon
       end
       route
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/PerceivedComplexity
   end
 end

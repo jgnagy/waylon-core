@@ -21,7 +21,7 @@ module Waylon
     # @return [Class] The name of the corresponding Sense class
     def sense_class
       last = self.class.name.split("::").last
-      Module.const_get("Senses::#{last}")
+      Module.const_get("Waylon::Senses::#{last}")
     end
 
     # This must be implemented on every Webhook to provide a mechanism to ensure received payloads are legit
@@ -38,36 +38,35 @@ module Waylon
     end
 
     before do
-      content_type "application/json"
-
-      begin
-        unless request.get? || request.options?
-          request.body.rewind
-          @parsed_body = JSON.parse(request.body.read, symbolize_names: true)
-        end
-      rescue StandardError => e
-        halt(400, { error: "Request must be JSON: #{e.message}" }.to_json)
+      unless request.get? || request.options?
+        request.body.rewind
+        @parsed_body = JSON.parse(request.body.read, symbolize_names: true)
       end
+    rescue StandardError => e
+      content_type "application/json"
+      halt(400, { error: "Request must be JSON: #{e.message}" }.to_json)
     end
 
     after do
       request.options? && headers("Access-Control-Allow-Methods" => @allowed_types || %w[OPTIONS POST])
     end
 
-    post "/" do
-      begin
-        request.body.rewind
-        verify request.body.read, request.env
-        enqueue @parsed_body
-      rescue StandardError => e
-        halt(422, { error: "Unprocessable entity: #{e.message}" }.to_json)
-      end
-
-      { status: :ok }.to_json
-    end
-
-    options "/" do
-      halt 200
-    end
+    ## Example incoming webhook
+    #
+    # post "/" do
+    #   begin
+    #     request.body.rewind
+    #     verify request.body.read, request.env
+    #     enqueue @parsed_body
+    #   rescue StandardError => e
+    #     halt(422, { error: "Unprocessable entity: #{e.message}" }.to_json)
+    #   end
+    #
+    #   { status: :ok }.to_json
+    # end
+    #
+    # options "/" do
+    #   halt 200
+    # end
   end
 end

@@ -5,6 +5,8 @@ module Waylon
   class SenseRegistry
     include Singleton
 
+    attr_reader :senses
+
     # A convenience wrapper around the singleton instance #register method
     # @param (see #register)
     # @return (see #register)

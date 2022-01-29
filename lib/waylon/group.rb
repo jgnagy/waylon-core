@@ -30,7 +30,7 @@ module Waylon
       return false unless include?(user)
 
       users = members
-      users.delete(user)
+      users.delete(user.email.downcase)
       storage.store(key, users)
       true
     end

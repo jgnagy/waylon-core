@@ -10,17 +10,35 @@ module Waylon
     # @param action [Symbol] The method to call if the condition matches
     # @param allowed_groups [Array<Symbol>] The group names allowed to use this action
     # @param help [String] Optional help text to describe usage for this action
-    def initialize(mechanism, action, allowed_groups, help = nil)
+    # @param mention_only [Boolean] Only applies to messages that directly mention (or IM) this bot
+    # rubocop:disable Style/OptionalBooleanParameter
+    def initialize(mechanism, action, allowed_groups, help = nil, mention_only = true)
       @mechanism = mechanism
       @action = action
       @allowed_groups = allowed_groups
       @help = help
+      @mention_only = mention_only
     end
+    # rubocop:enable Style/OptionalBooleanParameter
 
     # Placeholder for determining if this condition applies to the given input
     # @param _input [Waylon::Message] The input message
+    # @return [Boolean]
     def matches?(_input)
       false
+    end
+
+    # Is this condition only valid for Messages that directly mention the bot?
+    # @return [Boolean]
+    def mention_only?
+      @mention_only
+    end
+
+    # Placeholder for optionally providing _named_ tokens
+    # @param _input [String] The message content
+    # @return [Hash<String,Object>]
+    def named_tokens(_input)
+      {}
     end
 
     # Checks if a user is allowed based on this condition
@@ -42,6 +60,13 @@ module Waylon
         break if permitted
       end
       permitted
+    end
+
+    # Determines of a message complies with the {#mention_only?} setting for this condition
+    # @param message [Waylon::Message] The received message
+    # @return [Boolean]
+    def properly_mentions?(message)
+      (mention_only? && message.to_bot?) || (!mention_only? && !message.to_bot?)
     end
 
     # Tokens is used to provide details about the message input to the action

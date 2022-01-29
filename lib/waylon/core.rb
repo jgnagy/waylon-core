@@ -2,6 +2,7 @@
 
 # Standard Library dependencies
 require "base64"
+require "benchmark"
 require "digest"
 require "English"
 require "fileutils"
@@ -21,6 +22,7 @@ require "i18n"
 require "json"
 require "moneta"
 require "resque"
+require "sinatra"
 
 # Internal requirements
 require "waylon/version"
@@ -39,8 +41,11 @@ require "waylon/sense"
 require "waylon/skill_registry"
 require "waylon/skill"
 require "waylon/user"
+require "waylon/conditions/black_hole"
 require "waylon/conditions/default"
 require "waylon/conditions/permission_denied"
 require "waylon/conditions/regex"
+require "waylon/routes/black_hole"
 require "waylon/routes/default"
 require "waylon/routes/permission_denied"
+require "waylon/webhook"

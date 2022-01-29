@@ -23,7 +23,7 @@ module Waylon
       @priority = priority
     end
 
-    delegate %i[action help matches? permits? tokens] => :@condition
+    delegate %i[action help matches? mention_only? named_tokens permits? properly_mentions? tokens] => :@condition
 
     private
 

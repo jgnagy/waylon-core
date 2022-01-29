@@ -20,17 +20,16 @@ module Waylon
 
     # The connection between Senses and Skills happens here, via a Route and a Hash of details
     # @param route [Route] route The matching Route from the SkillRegistry
-    # @param request_id [String] The ID (from the messaging platform) of the request
-    # @param body [String] Message content for the Skill
+    # @param request [String] The request message (or its ID) from the messaging platform
     # @api private
-    def self.enqueue(route, request_id, body)
+    def self.enqueue(route, request)
       details = {
         "sense" => self,
-        "message" => request_id,
-        "tokens" => route.tokens(body.strip)
+        "request" => request,
+        "route" => route.name
       }
 
-      Resque.enqueue route.destination, route.action, details
+      Resque.enqueue route.destination, details
     end
 
     # Provides a simple mechanism for referencing the Group subclass provided by this Sense
