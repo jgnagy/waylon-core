@@ -44,7 +44,7 @@ Alone, this library isn't super useful for running a bot, but it does include a 
 
 ## Development
 
-Waylon's development pipeline makes heavy use of [RSpec](https://rspec.info/) for testing (and [SimpleCov](https://github.com/simplecov-ruby/simplecov) for reporting on coverage), [Rubocop](https://rubocop.org/) for linting/format checking, [YARD](https://yardoc.org/) for documentation, and [Travis CI](https://www.travis-ci.com/) for CI. Most of this is built-in and will work out-of-the-box for GitHub PRs.
+Waylon's development pipeline makes heavy use of [RSpec](https://rspec.info/) for testing (and [SimpleCov](https://github.com/simplecov-ruby/simplecov) for reporting on coverage), [Rubocop](https://rubocop.org/) for linting/format checking, [YARD](https://yardoc.org/) for documentation, and [RoxanneCI](https://github.com/apps/roxanneci) for CI. Most of this is built-in and will work out-of-the-box for GitHub PRs.
 
 To get started locally, after checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rake` to run the tests and linting. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
