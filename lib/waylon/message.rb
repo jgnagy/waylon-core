@@ -30,6 +30,7 @@ module Waylon
     end
 
     def to_bot?
+      # private? || mentions_bot?
       true
     end
   end

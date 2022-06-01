@@ -18,6 +18,9 @@ module Waylon
         @mechanism.match(input).to_a[1..]
       end
 
+      # Provides the _named_ regular expression match groups as a hash
+      # @param input [String] The message text
+      # @return [Hash<Symbol,String>] The named regular expression match groups
       def named_tokens(input)
         match_data = @mechanism.match(input)
         match_data.names.to_h { |n| [n.to_sym, match_data[n]] }

@@ -147,8 +147,8 @@ module Waylon
       # @api private
       # @return [String] A generated email address
       def self.email_from_name(name)
-        if ENV["USER_EMAIL"] && name == "homer.simpson"
-          ENV["USER_EMAIL"]
+        if ENV.fetch("USER_EMAIL", nil) && name == "homer.simpson"
+          ENV.fetch("USER_EMAIL", nil)
         else
           "#{name.downcase.gsub(/[\s_-]/, ".")}@example.com"
         end

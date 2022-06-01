@@ -146,7 +146,13 @@ module Waylon
       private
 
       def all_group_keys
-        db.adapter.backend.keys("groups.*")
+        if db.adapter.instance_of?(Moneta::Adapters::Redis)
+          db.adapter.backend.keys("groups.*")
+        else
+          groups = []
+          db.each_key { |key| groups << key if key.start_with?("groups.") }
+          groups
+        end
       end
 
       def found_user(user_string)

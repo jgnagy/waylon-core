@@ -27,8 +27,10 @@ module Waylon
         response << "  - *Test Result:* #{state ? "Success" : "Error"}"
         response << "  - *Read time:* #{read_time}s"
         response << "  - *Write time:* #{write_time}s"
-        response << "*Queue Monitoring:*"
-        response << "  - Failed jobs: #{Resque::Failure.count}"
+        if Resque.redis.connected?
+          response << "*Queue Monitoring:*"
+          response << "  - Failed jobs: #{Resque::Failure.count}"
+        end
 
         reply response.join("\n")
       end

@@ -41,7 +41,7 @@ module Waylon
       ENV.keys.grep(/CONF_/).each do |env_key|
         conf_key = env_key.downcase.split("_")[1..].join(".")
         ::Waylon::Logger.log("Attempting to set #{conf_key} from #{env_key}", :debug)
-        self[conf_key] = ENV[env_key]
+        self[conf_key] = ENV.fetch(env_key, nil)
       end
       true
     end

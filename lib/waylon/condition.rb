@@ -66,7 +66,10 @@ module Waylon
     # @param message [Waylon::Message] The received message
     # @return [Boolean]
     def properly_mentions?(message)
-      (mention_only? && message.to_bot?) || (!mention_only? && !message.to_bot?)
+      return true unless mention_only?
+
+      message.to_bot?
+      # (mention_only? && message.to_bot?) || (!mention_only? && !message.to_bot?)
     end
 
     # Tokens is used to provide details about the message input to the action

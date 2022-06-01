@@ -41,7 +41,10 @@ end
 Waylon::RSpec::TestChannel.find_or_create("random")
 
 # Load demo skills here
+require "waylon/skills/diagnostics"
 require "waylon/skills/fun"
+require "waylon/skills/groups"
+require "waylon/skills/help"
 
 # Handle demo chat REPL
 def adminuser
@@ -101,7 +104,7 @@ def handle_input(body, from: this_user, privately: true)
   else
     message_count = Waylon::RSpec::TestSense.sent_messages.size
 
-    Waylon::RSpec::TestSense.process(msg_details(body, from, privately))
+    Waylon::RSpec::TestSense.perform(msg_details(body, from, privately))
     Waylon::RSpec::TestWorker.handle(Waylon::RSpec::TestSense.fake_queue)
     result = Waylon::RSpec::TestSense.sent_messages[message_count..].join("\n")
     puts("(@#{Waylon::RSpec::TestUser.whoami.handle}) >> #{result}")

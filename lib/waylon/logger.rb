@@ -19,12 +19,18 @@ module Waylon
     # Provides an easy way to access the underlying logger
     # @return [Logger] The Logger instance
     def self.logger
-      return @logger if @logger
+      @logger ||= json_logger
+    end
 
-      @logger = ::Logger.new($stderr)
-      @logger.level = level
-      @logger.progname = "Waylon"
-      @logger.formatter = proc do |severity, datetime, progname, msg|
+    def self.logger=(logger)
+      @logger = logger
+    end
+
+    def self.json_logger
+      a_logger = ::Logger.new($stderr)
+      a_logger.level = level
+      a_logger.progname = "Waylon"
+      a_logger.formatter = proc do |severity, datetime, progname, msg|
         json_data = JSON.dump(
           ts: datetime,
           severity: severity.ljust(5).to_s,
@@ -35,7 +41,8 @@ module Waylon
         )
         "#{json_data}\n"
       end
-      @logger
+
+      a_logger
     end
   end
 end
