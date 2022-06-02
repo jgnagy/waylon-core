@@ -2,5 +2,6 @@
 
 gem install bundler -v '~> 2.3'
 bundle install
-git diff
-bundle exec rake release
+rm -rf pkg/*.gem
+bundle exec rake build
+bundle exec gem push pkg/*.gem
