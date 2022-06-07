@@ -46,7 +46,7 @@ module Waylon
         @namespace || name.to_s.split("::").last.downcase
       end
 
-      # Creates namespaced configuration keys for Webhook subclasses
+      # Creates namespaced configuration keys for BaseComponent subclasses
       # @param (see Config#add_schema)
       def config(key, default: nil, required: false, type: String)
         conf = Config.instance
