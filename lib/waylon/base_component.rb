@@ -127,7 +127,7 @@ module Waylon
       end
 
       # A wrapper for accessing the persistent storage
-      # @return [Waylon::Storage] The Storage wrapper class
+      # @return [Waylon::Storage] The Storage wrapper module
       def storage
         Waylon::Storage
       end

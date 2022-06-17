@@ -62,5 +62,14 @@ RSpec.describe Waylon::BaseComponent do
       expect(subject_instance.cache(:test)).to be
       expect(subject_instance.cache(:test) { "cachable output" }).to eq "cachable output"
     end
+
+    it "provides a usable, encrypted key/value store" do
+      value_to_store = [1, 2, 3, 4]
+      expect(subject_instance.db.load(:some_value)).not_to be
+      subject_instance.db.store(:some_value, value_to_store)
+      expect(subject_instance.db.load(:some_value)).to eq(value_to_store)
+      expect(subject_instance.db::Store.load(:some_value)).not_to eq(value_to_store)
+      expect(subject_instance.db::Store.load(:some_value)).to be_a(String)
+    end
   end
 end

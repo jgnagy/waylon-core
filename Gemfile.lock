@@ -1,13 +1,14 @@
 PATH
   remote: .
   specs:
-    waylon-core (0.1.5)
+    waylon-core (0.1.6)
       addressable (~> 2.8)
       faraday (~> 1.8)
       i18n (~> 1.8)
       json (~> 2.6)
       moneta (~> 1.4)
       puma (~> 5.5)
+      rbnacl (~> 7.1)
       resque (~> 2.2)
 
 GEM
@@ -42,6 +43,7 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
+    ffi (1.15.5)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     json (2.6.2)
@@ -63,6 +65,8 @@ GEM
       rack
     rainbow (3.1.1)
     rake (13.0.6)
+    rbnacl (7.1.1)
+      ffi
     redis (4.6.0)
     redis-namespace (1.8.2)
       redis (>= 3.0.4)

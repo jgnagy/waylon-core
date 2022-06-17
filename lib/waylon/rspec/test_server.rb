@@ -20,7 +20,7 @@ config = Waylon::Config.instance
 config.load_env
 
 Waylon::Cache = Moneta.new(:Cookie)
-Waylon::Storage = Moneta.new(:LRUHash)
+p Waylon::Storage
 Waylon::Logger.log("Found Global Admins: #{config.admins}")
 
 Waylon::RSpec::TestUser.find_or_create(
