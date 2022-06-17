@@ -6,7 +6,7 @@ module Waylon
     VERSION = [
       0, # Major
       1, # Minor
-      6  # Patch
+      8  # Patch
     ].join(".")
   end
 end
