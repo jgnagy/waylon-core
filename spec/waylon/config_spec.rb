@@ -15,7 +15,7 @@ RSpec.describe Waylon::Config do
   end
 
   it "provides defaults for required Redis values" do
-    expect(subject.redis_host).to eq "redis"
+    expect(subject.redis_host).to eq "localhost"
     expect(subject.redis_port).to eq "6379"
   end
 

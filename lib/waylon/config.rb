@@ -32,7 +32,7 @@ module Waylon
 
     # Load in the config from env variables
     # @return [Boolean] Was the configuration loaded?
-    def load_env # rubocop:disable Metrics/AbcSize
+    def load_env
       @schema ||= {}
       self["global.log.level"] = ENV.fetch("LOG_LEVEL", "info")
       self["global.redis"] = ENV.fetch("REDIS", "localhost:6379")
