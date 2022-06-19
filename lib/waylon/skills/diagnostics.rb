@@ -23,10 +23,10 @@ module Waylon
         response << "*Skill plugins:*"
         loaded_routes.each { |d| response << "  - #{d}" }
         response << "*Redis:*"
-        state, read_time, write_time = test_redis
+        state, raw_read_time, raw_write_time, read_time, write_time = test_redis
         response << "  - *Test Result:* #{state ? "Success" : "Error"}"
-        response << "  - *Read time:* #{read_time}s"
-        response << "  - *Write time:* #{write_time}s"
+        response << "  - *Read time:* #{read_time}s (raw: #{raw_read_time}s)"
+        response << "  - *Write time:* #{write_time}s (raw: #{raw_write_time}s)"
         if Resque.redis.connected?
           response << "*Queue Monitoring:*"
           response << "  - Failed jobs: #{Resque::Failure.count}"
@@ -43,17 +43,27 @@ module Waylon
         SenseRegistry.instance.senses.map { |_s, c| c.name }.sort.uniq
       end
 
-      def test_redis
-        test_key = ("a".."z").to_a.sample(10).join
+      def test_redis # rubocop:disable Metrics/AbcSize
+        test_key1 = ("a".."z").to_a.sample(10).join
+        test_key2 = ("a".."z").to_a.sample(10).join
         test_value = (0..1000).to_a.sample(20).map(&:to_s).join
         test_result = nil
 
-        write_time = Benchmark.realtime { db.store(test_key, test_value) }
-        read_time = Benchmark.realtime { test_result = db.load(test_key) }
+        raw_write_time = Benchmark.realtime { cache(test_key1) { test_value } }
+        raw_read_time = Benchmark.realtime { cache(test_key1) { test_value } }
+        enc_write_time = Benchmark.realtime { db.store(test_key2, test_value) }
+        enc_read_time = Benchmark.realtime { test_result = db.load(test_key2) }
 
-        db.delete(test_key)
+        db.delete(test_key1)
+        db.delete(test_key2)
 
-        [(test_value == test_result), read_time.round(6), write_time.round(6)]
+        [
+          (test_value == test_result),
+          raw_read_time.round(6),
+          raw_write_time.round(6),
+          enc_read_time.round(6),
+          enc_write_time.round(6)
+        ]
       end
     end
   end

@@ -22,6 +22,10 @@ module Waylon
       Store.clear
     end
 
+    def self.delete(key)
+      Store.delete(key)
+    end
+
     def self.key?(name)
       Store.key?(name)
     end
