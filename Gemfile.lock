@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    waylon-core (0.1.8)
+    waylon-core (0.1.9)
       addressable (~> 2.8)
       faraday (~> 1.8)
       i18n (~> 1.8)
@@ -50,7 +50,7 @@ GEM
     moneta (1.5.1)
     mono_logger (1.1.1)
     multi_json (1.15.0)
-    multipart-post (2.2.0)
+    multipart-post (2.2.3)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)

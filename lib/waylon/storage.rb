@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
+Waylon::Cache = Moneta.new(
+  :Redis,
+  url: "redis://#{ENV.fetch("REDIS", "localhost:6379")}/1"
+)
+
 module Waylon
   # Used for working with the Moneta store
   module Storage
     Store = Moneta.new(
       :Redis,
-      url: "redis://#{ENV.fetch("REDIS", "localhost:6379")}/1"
+      url: "redis://#{ENV.fetch("REDIS", "localhost:6379")}/2"
     )
 
     def self.cipher

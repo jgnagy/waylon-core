@@ -35,8 +35,7 @@ module Waylon
     def load_env # rubocop:disable Metrics/AbcSize
       @schema ||= {}
       self["global.log.level"] = ENV.fetch("LOG_LEVEL", "info")
-      self["global.redis.host"] = ENV.fetch("REDIS_HOST", "redis")
-      self["global.redis.port"] = ENV.fetch("REDIS_PORT", "6379")
+      self["global.redis"] = ENV.fetch("REDIS", "localhost:6379")
       self["global.admins"] = ENV.fetch("GLOBAL_ADMINS", "")
       ENV.keys.grep(/CONF_/).each do |env_key|
         conf_key = env_key.downcase.split("_")[1..].join(".")
@@ -49,13 +48,13 @@ module Waylon
     # Provides the redis host used for most of Waylon's brain
     # @return [String] The redis host
     def redis_host
-      self["global.redis.host"]
+      self["global.redis"].split(":").first
     end
 
     # Provides the redis port used for most of Waylon's brain
     # @return [String] The redis host
     def redis_port
-      self["global.redis.port"]
+      self["global.redis"].split(":").last
     end
 
     # Clear the configuration
