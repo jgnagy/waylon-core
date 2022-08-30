@@ -68,8 +68,8 @@ RSpec.describe Waylon::BaseComponent do
       expect(subject_instance.db.load(:some_value)).not_to be
       subject_instance.db.store(:some_value, value_to_store)
       expect(subject_instance.db.load(:some_value)).to eq(value_to_store)
-      expect(subject_instance.db::Store.load(:some_value)).not_to eq(value_to_store)
-      expect(subject_instance.db::Store.load(:some_value)).to be_a(String)
+      expect(subject_instance.db.storage.load(:some_value)).not_to eq(value_to_store)
+      expect(subject_instance.db.storage.load(:some_value)).to be_a(String)
     end
   end
 end

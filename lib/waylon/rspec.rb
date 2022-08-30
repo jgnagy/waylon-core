@@ -46,5 +46,5 @@ module Waylon
   end
 end
 
-Waylon::Cache = Moneta.new(:Cookie)
-Waylon::Storage::Store = Moneta.new(:Cookie)
+Waylon::Cache.storage = Moneta.new(:Cookie)
+Waylon::Storage.storage = Moneta.new(:Cookie)

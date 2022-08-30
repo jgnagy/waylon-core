@@ -1,14 +1,9 @@
 # frozen_string_literal: true
 
-Waylon::Cache = Moneta.new(
-  :Redis,
-  url: "redis://#{ENV.fetch("REDIS", "localhost:6379")}/1"
-)
-
 module Waylon
   # Used for working with the Moneta store
   module Storage
-    Store = Moneta.new(
+    DefaultStorage = Moneta.new(
       :Redis,
       url: "redis://#{ENV.fetch("REDIS", "localhost:6379")}/2"
     )
@@ -19,20 +14,20 @@ module Waylon
     end
 
     def self.clear
-      Store.clear
+      storage.clear
     end
 
     def self.delete(key)
-      Store.delete(key)
+      storage.delete(key)
     end
 
     def self.key?(name)
-      Store.key?(name)
+      storage.key?(name)
     end
 
     def self.load(key)
       this_cipher = cipher
-      raw = Store.load(key)
+      raw = storage.load(key)
       return nil unless raw
 
       decoded = Base64.decode64(raw)
@@ -40,11 +35,19 @@ module Waylon
       JSON.parse(plain)
     end
 
+    def self.storage
+      @storage ||= DefaultStorage
+    end
+
+    def self.storage=(storage)
+      @storage = storage
+    end
+
     def self.store(key, value)
       this_cipher = cipher
       encrypted = this_cipher.encrypt(value.to_json)
       encoded = Base64.encode64(encrypted)
-      Store.store(key, encoded)
+      storage.store(key, encoded)
     end
   end
 end

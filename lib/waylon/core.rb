@@ -27,6 +27,7 @@ require "sinatra"
 
 # Internal requirements
 require "waylon/version"
+require "waylon/cache"
 require "waylon/config"
 require "waylon/generic_exception"
 require "waylon/exceptions/not_implemented_error"
