@@ -20,7 +20,7 @@ RSpec.describe Waylon::Config do
   end
 
   it "provides defaults for required log levels" do
-    expect(subject["global.log.level"]).to eq "info"
+    expect(subject["global.log.level"].downcase).to eq "info"
   end
 
   it "ignores attempts to set undefined non-global keys" do
