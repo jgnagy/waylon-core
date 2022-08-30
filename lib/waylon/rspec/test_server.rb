@@ -100,6 +100,8 @@ def handle_input(body, from: this_user, privately: true)
   elsif ["su", "su -", "su admin", "su - admin"].include?(body)
     puts 'Admin enabled! Use "exit" to go back to a normal user.'
     @admin_enabled = true
+  elsif @admin_enabled && %w[irb pry].include?(body)
+    pry
   else
     message_count = Waylon::RSpec::TestSense.sent_messages.size
 

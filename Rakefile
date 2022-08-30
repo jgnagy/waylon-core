@@ -19,5 +19,9 @@ end
 task default: %i[spec rubocop yard]
 
 task :demo do
+  require "pry"
+  Waylon::Logger.logger = ::Logger.new("/dev/null")
+  Waylon::Cache.storage = Moneta.new(:Cookie)
+  Waylon::Storage.storage = Moneta.new(:Cookie)
   require "waylon/rspec/test_server"
 end
