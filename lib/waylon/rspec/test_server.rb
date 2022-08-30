@@ -19,7 +19,7 @@ require "waylon/rspec/test_worker"
 config = Waylon::Config.instance
 config.load_env
 
-Waylon::Cache.store = Moneta.new(:Cookie)
+Waylon::Cache.storage = Moneta.new(:Cookie)
 Waylon::Logger.log("Found Global Admins: #{config.admins}")
 
 Waylon::RSpec::TestUser.find_or_create(

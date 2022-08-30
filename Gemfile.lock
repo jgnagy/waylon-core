@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    waylon-core (0.2.1)
+    waylon-core (0.2.2)
       addressable (~> 2.8)
       faraday (~> 1.8)
       i18n (~> 1.8)
