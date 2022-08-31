@@ -8,6 +8,10 @@ module Waylon
       url: "redis://#{ENV.fetch("REDIS", "localhost:6379")}/2"
     )
 
+    def self.adapter
+      storage.adapter
+    end
+
     def self.cipher
       key_bytes = RbNaCl::Hash.sha256(encryption_key)[0..31]
       RbNaCl::SimpleBox.from_secret_key(key_bytes)
@@ -19,6 +23,10 @@ module Waylon
 
     def self.delete(key)
       storage.delete(key)
+    end
+
+    def self.each_key(&block)
+      storage.each_key(&block)
     end
 
     def self.encryption_key

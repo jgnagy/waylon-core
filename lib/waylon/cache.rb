@@ -8,6 +8,10 @@ module Waylon
       url: "redis://#{ENV.fetch("REDIS", "localhost:6379")}/1"
     )
 
+    def self.adapter
+      storage.adapter
+    end
+
     def self.clear
       storage.clear
     end
