@@ -22,6 +22,7 @@ module Waylon
       @logger ||= json_logger
     end
 
+    # @param [Logger] The Logger instance to use
     def self.logger=(logger)
       @logger = logger
     end
