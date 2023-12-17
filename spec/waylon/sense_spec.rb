@@ -3,15 +3,15 @@
 RSpec.describe Waylon::Sense do
   let(:resque_details) do
     {
-      "sense" => Waylon::Sense,
+      "sense" => described_class,
       "request" => 123,
       "route" => fake_route.name
     }
   end
 
   let(:fake_route) do
-    route = instance_double("Route", name: "fake_name", destination: Waylon::Skills::Default, action: :unknown)
-    allow(route).to receive(:tokens).with("some foo") { ["foo"] }
+    route = instance_double(Waylon::Route, name: "fake_name", destination: Waylon::Skills::Default, action: :unknown)
+    allow(route).to receive(:tokens).with("some foo").and_return(["foo"])
     route
   end
 

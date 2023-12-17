@@ -21,7 +21,7 @@ end
 
 RSpec.describe Waylon::SkillRegistry do
   subject do
-    Waylon::SkillRegistry.instance
+    described_class.instance
   end
 
   it "provides help based on user permissions" do

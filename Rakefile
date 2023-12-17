@@ -18,9 +18,11 @@ end
 
 task default: %i[spec rubocop yard]
 
+# Allows a REPL to be started with a demo chat
+desc "Start a REPL with a demo chat"
 task :demo do
   require "pry"
-  Waylon::Logger.logger = ::Logger.new("/dev/null")
+  Waylon::Logger.logger = Logger.new("/dev/null")
   Waylon::Cache.storage = Moneta.new(:Cookie)
   Waylon::Storage.storage = Moneta.new(:Cookie)
   require "waylon/rspec/test_server"

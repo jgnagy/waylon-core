@@ -21,7 +21,7 @@ module Waylon
 
     # Does the Message mention the bot (meant to be overwritten by mixing classes)
     def mentions_bot?
-      nil
+      false
     end
 
     # Is the Message a private/direct Message?

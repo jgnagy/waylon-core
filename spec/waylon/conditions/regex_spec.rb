@@ -2,7 +2,7 @@
 
 RSpec.describe Waylon::Conditions::Regex do
   subject do
-    Waylon::Conditions::Regex.new(
+    described_class.new(
       /^say\s(.+)\sto\sme[.!]?$/,
       :foobar,
       :a_group,
@@ -12,13 +12,13 @@ RSpec.describe Waylon::Conditions::Regex do
 
   it "matches expected text input" do
     ["say this stuff to me", "say this other stuff to me!", "say foo to me."].each do |input|
-      expect(subject.matches?(input)).to be_truthy
+      expect(subject).to be_matches(input)
     end
   end
 
   it "doesn't match other text input" do
     ["", "hi there", "Do it now!"].each do |input|
-      expect(subject.matches?(input)).to be_falsey
+      expect(subject).not_to be_matches(input)
     end
   end
 

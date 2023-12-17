@@ -13,7 +13,6 @@ require "singleton"
 require "ostruct"
 require "timeout"
 require "resolv"
-require "set"
 
 # External dependencies
 require "addressable/uri"

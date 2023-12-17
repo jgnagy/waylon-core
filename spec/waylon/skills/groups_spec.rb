@@ -4,6 +4,7 @@ require "waylon/skills/groups"
 
 RSpec.describe Waylon::Skills::Groups do
   it { is_expected.to route("groups").to(:list_my_groups) }
+
   ["list all groups", "cleanup groups"].each do |phrase|
     action = phrase.gsub(" ", "_").to_sym
     it { is_expected.not_to route(phrase).to(action) }

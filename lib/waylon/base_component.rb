@@ -30,11 +30,11 @@ module Waylon
         cache_key = config_key_for(key)
         if !Waylon::Cache.key?(cache_key) && block_given?
           result = yield
-          Waylon::Cache.store(cache_key, result, expires: expires)
+          Waylon::Cache.store(cache_key, result, expires:)
         elsif !Waylon::Cache.key?(cache_key)
           return nil
         end
-        Waylon::Cache.load(cache_key, expires: expires)
+        Waylon::Cache.load(cache_key, expires:)
       end
 
       # The namespace used for this component's storage
@@ -51,7 +51,7 @@ module Waylon
       def config(key, default: nil, required: false, type: String)
         conf = Config.instance
         config_key = config_key_for(key)
-        conf.add_schema(config_key, default: default, required: required, type: type)
+        conf.add_schema(config_key, default:, required:, type:)
       end
 
       # Provides the full Config key given a relative key
@@ -112,11 +112,11 @@ module Waylon
         cache_key = self.class.config_key_for(key)
         if !Waylon::Cache.key?(cache_key) && block_given?
           result = yield
-          Waylon::Cache.store(cache_key, result, expires: expires)
+          Waylon::Cache.store(cache_key, result, expires:)
         elsif !Waylon::Cache.key?(cache_key)
           return nil
         end
-        Waylon::Cache.load(cache_key, expires: expires)
+        Waylon::Cache.load(cache_key, expires:)
       end
 
       # A wrapper for access to a namespaced Config key

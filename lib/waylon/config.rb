@@ -19,7 +19,7 @@ module Waylon
     # @return [Boolean] Was the schema update successful?
     def add_schema(key, default: nil, required: false, type: String)
       @schema ||= {}
-      @schema[key] = { default: default, required: required, type: type }
+      @schema[key] = { default:, required:, type: }
       true
     end
 

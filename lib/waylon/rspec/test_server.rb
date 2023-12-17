@@ -4,7 +4,7 @@ require "rspec"
 require "rspec/expectations"
 require "rspec/mocks"
 
-major, *_unused = RSpec::Core::Version::STRING.split(/\./)
+major, *_unused = RSpec::Core::Version::STRING.split(".")
 abort "RSpec 3 or greater required" if major.to_i < 3
 
 require "waylon/core"
@@ -101,7 +101,7 @@ def handle_input(body, from: this_user, privately: true)
     puts 'Admin enabled! Use "exit" to go back to a normal user.'
     @admin_enabled = true
   elsif @admin_enabled && %w[irb pry].include?(body)
-    pry
+    pry # rubocop:disable Link/Debugger
   else
     message_count = Waylon::RSpec::TestSense.sent_messages.size
 

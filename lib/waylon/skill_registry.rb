@@ -69,7 +69,7 @@ module Waylon
       raise Exceptions::ValidationError, "Must be a kind of Skill" unless skill_class.ancestors.include?(Skill)
 
       @routes ||= []
-      @routes << Route.new(name: name.to_s, destination: skill_class, condition: condition)
+      @routes << Route.new(name: name.to_s, destination: skill_class, condition:)
     end
 
     # Given a message, find a suitable skill Route for it (sorted by priority, highest first)

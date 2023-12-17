@@ -25,12 +25,12 @@ module Waylon
     end
 
     def self.load(key, expires: nil)
-      expires ? storage.load(key, expires: expires) : storage.load(key)
+      expires ? storage.load(key, expires:) : storage.load(key)
     end
 
     def self.store(key, value, expires: nil)
       if expires
-        storage.store(key, value, expires: expires)
+        storage.store(key, value, expires:)
       else
         storage.store(key, value)
       end

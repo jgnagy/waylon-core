@@ -126,7 +126,7 @@ module Waylon
                else
                  "Help for #{skill}:"
                end
-        { type: "header", text: { type: "plain_text", text: text, emoji: true } }
+        { type: "header", text: { type: "plain_text", text:, emoji: true } }
       end
 
       def build_help_block(this_route)

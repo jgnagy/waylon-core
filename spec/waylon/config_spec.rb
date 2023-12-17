@@ -2,16 +2,16 @@
 
 RSpec.describe Waylon::Config do
   subject do
-    Waylon::Config.instance
+    described_class.instance
   end
 
   it "stores things" do
     key = "global.testtest"
-    expect(subject.value?(key)).not_to be
+    expect(subject.value?(key)).to be false
     subject[key] = "a test value"
-    expect(subject.value?(key)).to be
+    expect(subject).to be_value(key)
     expect(subject[key]).to eq "a test value"
-    expect(subject.delete(key))
+    expect(subject.delete(key)).to be_truthy
   end
 
   it "provides defaults for required Redis values" do
@@ -25,18 +25,18 @@ RSpec.describe Waylon::Config do
 
   it "ignores attempts to set undefined non-global keys" do
     key = "other.testtest"
-    expect(subject.value?(key)).not_to be
+    expect(subject).not_to be_value(key)
     subject[key] = "a test value"
-    expect(subject.value?(key)).not_to be
+    expect(subject).not_to be_value(key)
   end
 
   it "is resettable" do
     key = "global.testtest"
 
-    expect(subject.value?(key)).not_to be
+    expect(subject).not_to be_value(key)
     subject[key] = "a test value"
-    expect(subject.value?(key)).to be
+    expect(subject).to be_value(key)
     subject.reset
-    expect(subject.value?(key)).not_to be
+    expect(subject).not_to be_value(key)
   end
 end

@@ -10,7 +10,7 @@ end
 require "waylon/core"
 require "waylon/rspec"
 
-Waylon::Logger.logger = ::Logger.new("/dev/null")
+Waylon::Logger.logger = Logger.new("/dev/null")
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

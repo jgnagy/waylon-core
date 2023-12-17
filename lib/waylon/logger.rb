@@ -22,7 +22,7 @@ module Waylon
       @logger ||= json_logger
     end
 
-    # @param [Logger] The Logger instance to use
+    # @param logger [Logger] The Logger instance to use
     def self.logger=(logger)
       @logger = logger
     end
@@ -35,7 +35,7 @@ module Waylon
         json_data = JSON.dump(
           ts: datetime,
           severity: severity.ljust(5).to_s,
-          progname: progname,
+          progname:,
           pid: Process.pid,
           message: msg,
           v: Waylon::Core::VERSION

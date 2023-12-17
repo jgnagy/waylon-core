@@ -11,7 +11,7 @@ class TestCondition < Waylon::Condition
 end
 
 RSpec.describe Waylon::Condition do
-  context "for simple conditions" do
+  context "with simple conditions" do
     subject do
       TestCondition.new("success", :test, [:everyone])
     end
@@ -22,13 +22,13 @@ RSpec.describe Waylon::Condition do
 
     it "matches expected text input" do
       ["say success to me", "say this other stuff for success!", "success to me."].each do |input|
-        expect(subject.matches?(input)).to be_truthy
+        expect(subject).to be_matches(input)
       end
     end
 
     it "doesn't match other text input" do
       ["", "hi there", "Do it now!"].each do |input|
-        expect(subject.matches?(input)).to be_falsey
+        expect(subject).not_to be_matches(input)
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Waylon::Condition do
     end
   end
 
-  context "for complex conditions" do
+  context "with complex conditions" do
     let(:mention_only_condition) do
       TestCondition.new("other", :blah, [:admins])
     end
@@ -79,13 +79,13 @@ RSpec.describe Waylon::Condition do
     describe "for mention only conditions" do
       it "matches expected text input" do
         ["say other to me", "say this other stuff!", "other to me."].each do |input|
-          expect(mention_only_condition.matches?(input)).to be_truthy
+          expect(mention_only_condition).to be_matches(input)
         end
       end
 
       it "doesn't match other text input" do
         ["", "hi there", "Do it now!"].each do |input|
-          expect(mention_only_condition.matches?(input)).to be_falsey
+          expect(mention_only_condition).not_to be_matches(input)
         end
       end
 
@@ -110,13 +110,13 @@ RSpec.describe Waylon::Condition do
     describe "for generic conditions" do
       it "matches expected text input" do
         ["say other to me", "say this other stuff!", "other to me."].each do |input|
-          expect(non_mention_only_condition.matches?(input)).to be_truthy
+          expect(non_mention_only_condition).to be_matches(input)
         end
       end
 
       it "doesn't match other text input" do
         ["", "hi there", "Do it now!"].each do |input|
-          expect(non_mention_only_condition.matches?(input)).to be_falsey
+          expect(non_mention_only_condition).not_to be_matches(input)
         end
       end
 

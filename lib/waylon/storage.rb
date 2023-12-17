@@ -25,8 +25,8 @@ module Waylon
       storage.delete(key)
     end
 
-    def self.each_key(&block)
-      storage.each_key(&block)
+    def self.each_key(&)
+      storage.each_key(&)
     end
 
     def self.encryption_key

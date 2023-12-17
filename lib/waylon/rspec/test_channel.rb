@@ -19,7 +19,7 @@ module Waylon
         if existing_channel
           existing_channel
         else
-          channel_details = { name: name, created_at: Time.now }
+          channel_details = { name:, created_at: Time.now }
           TestSense.channel_list << channel_details
           new(TestSense.channel_list.size - 1)
         end

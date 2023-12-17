@@ -1,5 +1,9 @@
+require:
+- rubocop-rake
+- rubocop-rspec
+
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.2
   NewCops: enable
 
 Style/MixinUsage:
@@ -43,3 +47,18 @@ Metrics/BlockLength:
   - "**/*_spec.rb"
   - "*.gemspec"
   - "lib/waylon/rspec/matchers/**/*.rb"
+
+RSpec/MultipleExpectations:
+  Max: 6
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/NamedSubject:
+  Enabled: false
+
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false

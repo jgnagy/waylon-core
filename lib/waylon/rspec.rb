@@ -4,11 +4,10 @@ require "rspec"
 require "rspec/expectations"
 require "rspec/mocks"
 
-major, *_unused = RSpec::Core::Version::STRING.split(/\./)
+major, *_unused = RSpec::Core::Version::STRING.split(".")
 abort "RSpec 3 or greater required" if major.to_i < 3
 
 require "moneta"
-require "set"
 
 require "waylon/core"
 require "waylon/skills/default"

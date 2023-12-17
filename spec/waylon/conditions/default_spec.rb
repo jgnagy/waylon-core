@@ -2,7 +2,7 @@
 
 RSpec.describe Waylon::Conditions::Default do
   subject do
-    Waylon::Conditions::Default.new
+    described_class.new
   end
 
   it "matches any text input" do

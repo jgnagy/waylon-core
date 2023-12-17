@@ -5,8 +5,8 @@ module Waylon
     # The Waylon::Core version
     VERSION = [
       0, # Major
-      2, # Minor
-      6  # Patch
+      3, # Minor
+      0  # Patch
     ].join(".")
   end
 end

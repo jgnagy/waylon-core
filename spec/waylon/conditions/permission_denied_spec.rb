@@ -2,7 +2,7 @@
 
 RSpec.describe Waylon::Conditions::PermissionDenied do
   subject do
-    Waylon::Conditions::PermissionDenied.new
+    described_class.new
   end
 
   it "matches any text input" do
