@@ -46,7 +46,7 @@ module Waylon
       def test_redis # rubocop:disable Metrics/AbcSize
         test_key1 = ("a".."z").to_a.sample(10).join
         test_key2 = ("a".."z").to_a.sample(10).join
-        test_value = (0..1000).to_a.sample(20).map(&:to_s).join
+        test_value = (0..1000).to_a.sample(20).join
         test_result = nil
 
         raw_write_time = Benchmark.realtime { cache(test_key1) { test_value } }

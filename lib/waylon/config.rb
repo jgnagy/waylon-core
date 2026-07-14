@@ -115,7 +115,7 @@ module Waylon
     def valid?
       @schema ||= {}
       missing = @schema.select { |_k, v| v[:required] }.reject { |k, _v| @config[k] }
-      missing.each do |key, _value|
+      missing.each_key do |key|
         ::Waylon::Logger.log("Missing config: #{key}", :debug)
       end
       missing.empty?
