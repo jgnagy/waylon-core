@@ -1,9 +1,9 @@
-require:
-- rubocop-rake
-- rubocop-rspec
+plugins:
+  - rubocop-rake
+  - rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 3.2
+  TargetRubyVersion: 3.4
   NewCops: enable
 
 Style/MixinUsage:
@@ -22,6 +22,9 @@ Layout/LineLength:
   Max: 120
 
 Gemspec/RequireMFA:
+  Enabled: false
+
+Naming/PredicateMethod:
   Enabled: false
 
 Metrics/AbcSize:

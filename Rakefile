@@ -3,8 +3,6 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 require "rubocop/rake_task"
-require "redis/errors"
-require "resque/tasks"
 require "yard"
 require "waylon/core"
 
@@ -22,7 +20,7 @@ task default: %i[spec rubocop yard]
 desc "Start a REPL with a demo chat"
 task :demo do
   require "pry"
-  Waylon::Logger.logger = Logger.new("/dev/null")
+  Waylon::Logger.logger = Logger.new(File::NULL)
   Waylon::Cache.storage = Moneta.new(:Cookie)
   Waylon::Storage.storage = Moneta.new(:Cookie)
   require "waylon/rspec/test_server"

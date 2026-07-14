@@ -75,7 +75,7 @@ module Waylon
           log("Configuration for #{component_namespace} failed validation!", :error)
           false
         else
-          missing_configs.each { |k, _v| log("Missing required configuration: #{k}", :error) }
+          missing_configs.each_key { |k| log("Missing required configuration: #{k}", :error) }
           false
         end
       end
