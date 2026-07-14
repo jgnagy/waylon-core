@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "i18n", "~> 1.8"
   spec.add_dependency "json", "~> 2.6"
   spec.add_dependency "moneta", "~> 1.4"
-  spec.add_dependency "puma", "~> 6.4"
+  spec.add_dependency "puma", ">= 6.4", "< 9.0"
   spec.add_dependency "rbnacl", "~> 7.1"
   spec.add_dependency "resque", "~> 2.2"
 
