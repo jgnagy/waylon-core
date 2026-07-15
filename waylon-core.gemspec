@@ -29,13 +29,14 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "addressable", "~> 2.8"
   spec.add_dependency "base64", "~> 0.2"
-  spec.add_dependency "faraday", "~> 1.10"
+  spec.add_dependency "benchmark", "~> 0.4"
+  spec.add_dependency "faraday", ">= 1.10", "< 3.0"
   spec.add_dependency "i18n", "~> 1.8"
   spec.add_dependency "json", "~> 2.6"
   spec.add_dependency "moneta", "~> 1.4"
-  spec.add_dependency "puma", "~> 6.4"
+  spec.add_dependency "puma", ">= 6.4", "< 9.0"
   spec.add_dependency "rbnacl", "~> 7.1"
-  spec.add_dependency "resque", "~> 2.2"
+  spec.add_dependency "resque", ">= 2.2", "< 4.0"
 
   spec.add_development_dependency "bundler", "~> 2.4"
   spec.add_development_dependency "pry", "~> 0.14"
